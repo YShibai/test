@@ -30,7 +30,7 @@ fs.readdir(_dir, function(err, files){
         }
     }
       tv += "</ul>";
-      aleart(tv);
+      alert(tv);
       setTimeout(function(){
               document.getElementById('res5').innerHTML = tv;
       },1000);
