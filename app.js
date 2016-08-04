@@ -8,6 +8,8 @@ var _dir ='C:\\Users\\Public\\Documents\\a';
 var res = "";
 var FolderInfo = new Array();
 var FolderPath = "";
+var exec = require('child_process').exec;
+var result ="";
 // 指定ディレクトリを検索して一覧を表示
 fs.readdir(_dir, function(err, files){
 
@@ -15,8 +17,9 @@ fs.readdir(_dir, function(err, files){
     files.forEach(function(file){
         var _type = "";
         if(fs.statSync(_dir + "\\" + file).isFile()){
-            _type = "<img src='./file1/ico_file1a_02.gif'>";
-            res += _type + file + "<br>";
+            _type = "<img src='./file1/ico_file1a_02.gif' onClick='OpenFile("+ "\"" + file + "\"" + ")'>";
+            res += _type + "<a href='javascript:void(0)' onClick='OpenFile("+ "\"" + file + "\"" + ")'>" + file +　"</a>" + "<br>";
+            _type + "<a href='javascript:void(0)' onClick='OpenFile()'>" + file + "<br>";
         }else{
             _type = "<img src='./folder4/ico_folder4_1.gif' onClick='SubDir("+ "\"" + file + "\"" + ")'>";
             res += _type + "<a href='#' onClick='SubDir("+ "\"" + file + "\"" + ")'>" +file + "</a><br>";
@@ -27,8 +30,25 @@ fs.readdir(_dir, function(err, files){
     });
       document.getElementById('res1').innerHTML = _dir;
       document.getElementById('res2').innerHTML = res;
-
 });
+
+function OpenFile(F_Name){
+ result ="";
+exec(_dir  + "\\" + F_Name, function (error, stdout, stderr) {
+        if(stdout){
+            result += 'stdout: ' + stdout +'<br>';
+        }
+        if(stderr){
+            result += 'stderr: ' + stderr +'<br>';
+        }
+        if (error !== null) {
+          result += 'Exec error: ' + error +'<br>';
+        }else{
+          result += 'Success.';
+        }
+        document.getElementById('res5').innerHTML = result;
+    });
+}
 
 
 
@@ -58,8 +78,9 @@ function SubDir(currentD){
         files.forEach(function(file){
             var _type = "";
             if(fs.statSync(_dir + "\\" + file).isFile()){
-                _type = "<img src='./file1/ico_file1a_02.gif'>";
-                res += _type + file + "<br>";
+              _type = "<img src='./file1/ico_file1a_02.gif' onClick='OpenFile("+ "\"" + file + "\"" + ")'>";
+              res += _type + "<a href='javascript:void(0)' onClick='OpenFile("+ "\"" + file + "\"" + ")'>" + file +　"</a>" + "<br>";
+              _type + "<a href='javascript:void(0)' onClick='OpenFile()'>" + file + "<br>";
             }else{
               _type = "<img src='./folder4/ico_folder4_1.gif' onClick='SubDir("+ "\"" + file + "\"" + ")'>";
               res += _type + "<a href='#' onClick='SubDir("+ "\"" + file + "\"" + ")'>" +file + "</a><br>";
@@ -97,8 +118,9 @@ function UpDir(){
           files.forEach(function(file){
               var _type = "";
               if(fs.statSync(_dir + "\\" + file).isFile()){
-                  _type = "<img src='./file1/ico_file1a_02.gif'>";
-                  res += _type + file + "<br>";
+                _type = "<img src='./file1/ico_file1a_02.gif' onClick='OpenFile("+ "\"" + file + "\"" + ")'>";
+                res += _type + "<a href='javascript:void(0)' onClick='OpenFile("+ "\"" + file + "\"" + ")'>" + file +　"</a>" + "<br>";
+                _type + "<a href='javascript:void(0)' onClick='OpenFile()'>" + file + "<br>";
               }else{
                 _type = "<img src='./folder4/ico_folder4_1.gif' onClick='SubDir("+ "\"" + file + "\"" + ")'>";
                 res += _type + "<a href='#' onClick='SubDir("+ "\"" + file + "\"" + ")'>" +file + "</a><br>";
